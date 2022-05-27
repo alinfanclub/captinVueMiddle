@@ -84,6 +84,7 @@ export default {
 
         .textCompleted {
           color: grey;
+           text-decoration: line-through;
         }
         .checkBoxCompleted  {
           color: grey;
