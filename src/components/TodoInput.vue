@@ -4,15 +4,24 @@
       <span class="addContainer addBtn" v-on:click="addTodo">
         <i class="fas fa-plus"></i>
       </span>
+      <!-- use the modal component, pass in the prop -->
+      <modal v-if="showModal" @close="showModal = false">
+       <template #header>경고</template>
+       <template #body>오늘 할 일을 입력해주세요</template>
+       <template #footer>제발용</template>
+      </modal>
   </div>
+  
 </template>
-
 <script>
+  import Modal from './common/Modal.vue'
+
 export default {
     name : 'TodoInput',
     data()  {
       return {
         newTodoItem : '',
+        showModal: false,
       }
     },
     methods : {
@@ -20,11 +29,16 @@ export default {
         if (this.newTodoItem !== ''){
           this.$emit('addTodoItem', this.newTodoItem);
           this.clearInput();
+        } else {
+          this.showModal = !this.showModal;
         }
       },
       clearInput : function () {
         this.newTodoItem = '';
       }
+    },
+    components: {
+      Modal,
     }
 }
 </script>

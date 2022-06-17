@@ -16,7 +16,7 @@
 export default {
     name : 'TodoList',
     props: {
-      todoList : String,
+      todoList : Array,
     },
     methods : {
       removeTodo : function(todoItems, index) {
