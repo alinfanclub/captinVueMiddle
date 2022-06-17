@@ -18,15 +18,13 @@ export default {
     methods : {
       addTodo : function (){
         if (this.newTodoItem !== ''){
-          var obj = {completed: false, item: this.newTodoItem};
-          localStorage.setItem(this.newTodoItem, JSON.stringify(obj));
+          this.$emit('addTodoItem', this.newTodoItem);
           this.clearInput();
         }
       },
       clearInput : function () {
         this.newTodoItem = '';
       }
-
     }
 }
 </script>
@@ -45,6 +43,7 @@ export default {
     input {
       border-style: none;
       font-size: 0.9rem;
+      text-align: center;
       width: 100%;
       &:focus {
         outline: none;

@@ -1,8 +1,8 @@
 <template>
   <div id="todoAll">
     <ul>
-      <li v-for="(todoItems,index ) in todoList" :key="todoItems.item">
-          <i class="checkBtn fas fa-check" :class="{checkBoxCompleted : todoItems.completed}" v-on:click="toggleComplete(todoItems, index)"></i>
+      <li v-for="(todoItems,index ) in todoList" :key="todoItems.item" :class="{lineCompleted : todoItems.completed}" v-on:click="toggleComplete(todoItems, index)">
+          <i class="checkBtn fas fa-check" :class="{checkBoxCompleted : todoItems.completed}" ></i>
        <span :class="{textCompleted : todoItems.completed}"> {{todoItems.item}}</span>
         <span class="removeBtn" :class="{trashCompleted : todoItems.completed}" v-on:click="removeTodo(todoItems, index)">
           <i class="fas fa-trash-alt"></i>
@@ -15,36 +15,18 @@
 <script>
 export default {
     name : 'TodoList',
-    data() {
-      return {
-        todoList : []
-      }
+    props: {
+      todoList : String,
     },
     methods : {
       removeTodo : function(todoItems, index) {
-        console.log(todoItems, index);
-        localStorage.removeItem(todoItems.item);
-        this.todoList.splice(index, 1);
+        this.$emit('removeOne', todoItems, index);
       },
-      toggleComplete : function(todoItems) {
-        // console.log(todoItems, index);
-        // todoItems.completed = true;
-        todoItems.completed = !todoItems.completed
-        localStorage.removeItem(todoItems.item);
-        localStorage.setItem(todoItems.item, JSON.stringify(todoItems));
+      toggleComplete : function(todoItems, index) {
+       this.$emit('toggleOneItem', todoItems, index)
       },
     },
-    created: function() {
-      if (localStorage.length > 0) {
-        for (var i = 0; i < localStorage.length ; i ++) {
-          if(localStorage.key(i) !== 'loglevel:webpack-dev-server') {
-            // console.log(JSON.parse(localStorage.getItem(localStorage.key(i))));
-            this.todoList.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
-            //  this.todoList.push(localStorage.key(i));
-          }
-        }
-      }
-    },
+
 }
 </script>
 
@@ -57,6 +39,9 @@ export default {
     padding-left: 0;
     margin-top: 0;
     text-align: cneter;
+      .lineCompleted {
+        background-color: rgb(212, 212, 212);
+      }
       li {
         display: flex;
         align-items: center;
@@ -89,10 +74,10 @@ export default {
         .checkBoxCompleted  {
           color: grey;
         }
-        // .trashCompleted {
-        //   opacity: 0;
-        //   pointer-events: none;
-        // }
+        .trashCompleted {
+          opacity: 0;
+          pointer-events: none;
+        }
       }
     }
   }
