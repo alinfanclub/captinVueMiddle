@@ -1,31 +1,40 @@
 <template>
   <div id="todoAll">
-    <ul>
-      <li v-for="(todoItems,index ) in todoList" :key="todoItems.item" :class="{lineCompleted : todoItems.completed}" v-on:click="toggleComplete(todoItems, index)">
-          <i class="checkBtn fas fa-check" :class="{checkBoxCompleted : todoItems.completed}" ></i>
+    <transition-group name="list" tag="ul">
+      <li v-for="(todoItems,index ) in this.todoList" :key="todoItems.item" :class="{lineCompleted : todoItems.completed}">
+          <i class="checkBtn fas fa-check" :class="{checkBoxCompleted : todoItems.completed}" v-on:click="toggleComplete({todoItems, index})"></i>
        <span :class="{textCompleted : todoItems.completed}"> {{todoItems.item}}</span>
-        <span class="removeBtn" :class="{trashCompleted : todoItems.completed}" v-on:click="removeTodo(todoItems, index)">
+        <span class="removeBtn" :class="{trashCompleted : todoItems.completed}" v-on:click="removeTodo({todoItems, index})">
           <i class="fas fa-trash-alt"></i>
         </span>
       </li>
-    </ul>
+    </transition-group>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+import { mapMutations } from 'vuex';
 export default {
     name : 'TodoList',
-    props: {
-      todoList : Array,
-    },
     methods : {
-      removeTodo : function(todoItems, index) {
-        this.$emit('removeOne', todoItems, index);
-      },
-      toggleComplete : function(todoItems, index) {
-       this.$emit('toggleOneItem', todoItems, index)
-      },
+      // removeTodo(todoItems, index) {
+      //   this.$store.commit('removeOne', {todoItems, index});
+      // },
+      // toggleComplete(todoItems, index) {
+      //  this.$store.commit('toggleOneItem', {todoItems, index});
+      // },
+      ...mapMutations({
+        removeTodo : "removeOne",
+        toggleComplete : 'toggleOneItem'
+      }),
     },
+    computed: {
+      // ...mapGetters(['storedTodoItems'])
+      ...mapGetters({
+        todoList : "storedTodoItems"
+      })
+    }
 
 }
 </script>
@@ -83,5 +92,11 @@ export default {
     }
   }
  
-
+  // 리스트아이템 트랜지션효과
+  .list-enter-active, .list-leave-active {
+    transition: all .3s;
+  }
+.list-enter, .list-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
 </style>

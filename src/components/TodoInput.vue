@@ -1,7 +1,7 @@
 <template>
   <div class="inputBox shadow">
       <input type="text" v-model="newTodoItem" v-on:keyup.enter="addTodo">
-      <span class="addContainer addBtn">
+      <span class="addContainer addBtn" @click="addTodo">
         <i class="fas fa-plus"></i>
       </span>
       <!-- use the modal component, pass in the prop -->
@@ -24,15 +24,17 @@ export default {
       }
     },
     methods : {
-      addTodo : function (){
+      addTodo(){
         if (this.newTodoItem !== ''){
-          this.$emit('addTodoItem', this.newTodoItem);
+          // this.$emit('addTodoItem', this.newTodoItem);
+          const text = this.newTodoItem.trim();
+          this.$store.commit('addTodoItem', text)
           this.clearInput();
         } else {
           this.showModal = !this.showModal;
         }
       },
-      clearInput : function () {
+      clearInput() {
         this.newTodoItem = '';
       }
     },
