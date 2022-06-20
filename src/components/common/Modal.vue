@@ -4,11 +4,11 @@
           <div class="modal-wrapper">
             <div class="modal-container">
 
-              <div class="modal-header">
+              <!-- <div class="modal-header">
                 <slot name="header">
                   default header
                 </slot>
-              </div>
+              </div> -->
 
               <div class="modal-body">
                 <slot name="body">
@@ -16,14 +16,14 @@
                 </slot>
               </div>
 
-              <div class="modal-footer">
+              <!-- <div class="modal-footer">
                 <slot name="footer">
                   default footer
                 </slot>
-              </div>
+              </div> -->
 
                   <button class="modal-default-button" @click="$emit('close')">
-                    OK
+                    <i class="fas fa-times"></i>
                   </button>
             </div>
           </div>
@@ -67,6 +67,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
+    border-radius: 10px;
     }
 
     .modal-header h3 {
@@ -74,12 +75,16 @@ export default {
     color: #42b983;
     }
 
-    /* .modal-body {
+    .modal-body {
     margin: 20px 0;
-    } */
+    }
 
     .modal-default-button {
         height: 100%;
+        border: 0;
+        background-color: white;
+        color: red;
+        font-size: 20px;
     }
 
     /*

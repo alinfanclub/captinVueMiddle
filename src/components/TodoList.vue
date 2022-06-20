@@ -61,10 +61,12 @@ export default {
           border-radius: 5px;
           color: rgb(195, 62, 62);
           font-size: 20px;
+          cursor: pointer;
         }
 
         .checkBtn {
-          width: 3rem;;
+          width: 3rem;
+          // cursor: pointer;
         }
 
         .textCompleted {
@@ -72,11 +74,10 @@ export default {
            text-decoration: line-through;
         }
         .checkBoxCompleted  {
-          color: grey;
+          color: red;
         }
         .trashCompleted {
-          opacity: 0;
-          pointer-events: none;
+          opacity: .5;
         }
       }
     }
